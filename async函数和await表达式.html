@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // async异步函数与await表达式通常搭配使用，可以实现跟promise类似的功能，但是更加好用
+        // async的返回值为promise对象
+        // promise的结果由async函数执行的返回值决定
+
+        // 在普通函数前面加上一个async关键字，这个函数就会成为async函数，不管原函数是普通函数，匿名函数还是函数表达式，或者是箭头函数，都可以尝试加上async关键字
+        // 如何函数返回值是一个非promise类型的数据，返回值是什么，成功的值就是什么
+        async function fn() {
+            return "ok";
+        }
+        console.log(fn()); //promise对象 状态为解决状态,终值是ok
+
+        // 如果返回是一个promise对象，promise返回什么状态，函数整体的返回值就是什么
+        async function fn2() {
+            let p = new Promise((resolve, reject) => {
+                // 状态为解决状态
+                resolve("ok,解决");
+            })
+            return p;
+        }
+        console.log(fn2()); //解决状态的promise对象，终值ok，解决
+        async function fn2() {
+            let p = new Promise((resolve, reject) => {
+                // 状态为解决状态
+                reject("出问题");
+            })
+            return p;
+        }
+        console.log(fn2()); //拒绝状态的promise对象，据因是出问题
+
+        // 如果抛出异常，函数整体返回结果就是拒绝状态的promise
+        async function fn4() {
+            throw "对方不能理你，出错辽";
+        }
+        console.log(fn4()); //拒绝状态的promise，并且抛出一个错误
+        // async函数的返回和then的返回结果是一样的
+    </script>
+</body>
+
+</html>

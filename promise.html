@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Promise也是一个构造函数,是异步编程的一种方案,promise是一个容器，保存着未来才会结束的事的结果
+        // promise的特点
+        // 1、对象的状态不受外界影响，有三种状态 pending（正在进行，在等结果），fulfilled（已成功）触发onFulFilled事件。rejected（失败）触发onRejected事件
+        // 2、状态一旦改变就不会再变化
+        //4321
+        // 4大术语 解决，终值，拒绝，据因
+        // 3个状态 pending => fulfilled 等待到解决
+        // pending => 
+        // let p = new Promise(); 不传参数，会报错
+        // resolve解决的意思
+        // reject拒绝的意思
+        let p = new Promise((resolve, reject) => {
+            // resolve("ok"); // 让promise的状态从等待到解决，终值是ok
+            reject("oh no") //让promise的状态从等待到拒绝，据因是oh no
+        })
+        console.log(p);
+
+        let p2 = new Promise((resolve, reject) => {
+            let num = Math.random();
+            if (num > 0.5) {
+                resolve("成功了");
+            } else {
+                reject("失败啦");
+            }
+        })
+        console.log(p2);
+        // 两个回调函数
+        // 第一个是pending=>fulfilled的回调函数
+        // 第二个是pending=>rejected的回调函数
+        // p2.then(() => {}, () => {})
+        // p2.then((res) => {
+        //     console.log("成功=>终值是：", res); //成功
+        // }, (err) => {
+        //     console.log("失败=>据因是：", err);
+        // });
+        // catch方法专用于处理pending=>rejected状态时候
+        p2.then(res => {
+            console.log("成功=>终值是：", res)
+        }).catch(err => {
+            console.log("失败=>据因是：", err);
+        });
+        // promise eace和all方法.js
+    </script>
+</body>
+
+</html>

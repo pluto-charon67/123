@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Symbol是一种基本的基本数据类型，表示独一无二的值
+
+        // Symbol的特点:symbol是独一无二的，symbol也可以没有参数，创建symbol时symbol的描述不可以被修改
+
+        // 语法 Symbol对象接受有关字符串作为参数返回symbol对象 Symbol是一个构造函数，但是在创建symbol时一般不使用new关键字
+        let s = Symbol("aaa");
+        console.log(s);
+
+        // symbol独一无二
+        let s1 = Symbol("aaa");
+        let s2 = Symbol("aaa");
+        console.log(s1); //Symbol(aaa)
+        console.log(s2); //Symbol(aaa)
+        console.log(s1 == s2); //false
+
+        // 创建symbol时symbol的描述不可被修改
+        let se = Symbol("as");
+        // symbol.description可以获取或者设置symbol的描述
+        console.log(se.description);
+        // symbol作为属性时是不可枚举的，不可被遍历出来
+        let s5 = Symbol("username");
+        let s6 = Symbol("age");
+        let arr2 = {
+            [s5]: "展示",
+            [s6]: 26,
+            sex: "男",
+            w: 63
+        }
+        for (let i in arr2) {
+            console.log(arr2[i]); //男 63
+        }
+
+        // 单例模式：假设这个对象已经创建了，就直接返回这个创建过的对象，如果没有创建过，就会创建这个对象
+        // symbol.for()类似单例模式 ，在全局查找，能查找到（已经创建）就直接返回这个以创建的对象，没有查找到就创建s
+        let y = Symbol("黄色");
+
+        // 在之前没有使用for创建的黄色symbol，所以查找不到就创建
+        let y1 = Symbol.for("黄色");
+        console.log(y1 == y); //false 
+        let y2 = Symbol.for("黄色");
+        console.log(y1 == y2); //true
+
+        // Symbol.keyFor()返回一个以等级的symbol类型值的key
+        // 要使用symbol.for()创建的symbol才会登记到全局中
+
+        let s11 = Symbol("aa");
+        console.log(Symbol.keyFor(s11)); //undefined
+
+        let s22 = Symbol.for("aa"); //已经使用了symbolfor登记
+        console.log(Symbol.keyFor(s22)); //aa
+    </script>
+</body>
+
+</html>

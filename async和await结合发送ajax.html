@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>按钮</button>
+    <script>
+        var btn = document.querySelector("button");
+        s = (url) => {
+            let url2 = "https://tianqiapi.com/api?version=v1&appid=28651199&appsecret=hEouF3o6&city=" + url;
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest();
+                xhr.open("get", url2);
+                xhr.send();
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == 4) { // 判断ajax状态码
+                        if (xhr.status == 200) { // 判断http状态码
+                            // 解决
+                            resolve(JSON.parse(xhr.responseText));
+                            console.log(JSON.parse(xhr.responseText));
+                        } else {
+                            // 拒绝
+                            reject(xhr);
+                        }
+                    }
+                }
+            });
+        }
+        btn.onclick = async function() {
+            try {
+                let city = await s("广州");
+            } catch (err) {
+                console.log("错误信息");
+                console.log(err);
+            }
+        }
+    </script>
+</body>
+
+</html>

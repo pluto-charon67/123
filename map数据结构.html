@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // map，类似于对象，也是键值对的集合
+        // 对象的键名只能是字符串,而map的键值不限于字符串，各种类型的值包括对象都可以当键名,键可以是任意类型
+
+        let m1 = new Map([]); //不给初始值也可以给初始值
+        // 值-值
+        let m2 = new Map([
+            ["username", "张三"],
+            [1, 123],
+            [true, "真"],
+            [undefined, "未定义"],
+            [null, "空型"],
+            [
+                ["red", "green"],
+                [1, 2]
+            ],
+            [{
+                "a": "张三"
+            }, {
+                "b": "李四"
+            }]
+        ])
+        console.log(m2);
+        // {"username" => "张三"}
+        // {1 => 123}
+        // {true => "真"}
+        // {undefined => "未定义"}
+        // {null => "空型"}
+        // {Array(2) => Array(2)}
+        // {Object => Object}
+
+        // 添加使用MAP对象的.set(键名，键值)
+        let m3 = new Map([
+            [1, 2]
+        ]);
+        m3.set(false, "假");
+        console.log(m3);
+        // 获取值 get(键名)
+        console.log(m3.get(false)); //假
+
+        // 使用解构
+        console.log(m3); //{1 => 2, false => "假"}
+        console.log(...m3); //[1, 2] [false, "假"] 
+
+        //获得键名
+        console.log(m3.keys()); //{1, false}
+
+        // 获得键值
+        console.log(m3.values()); //{2, "假"} 可以使用for of
+
+        // 重复的键会覆盖
+        let m4 = new Map([
+            ["username", "张三"],
+            ["age", 14],
+            ["username", "李四"],
+        ])
+        console.log(m4); //{"username" => "李四", "age" => 14}
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .box {
+            position: relative;
+            text-align: center;
+            width: 1200px;
+            /* height: 500px; */
+            border: 2px solid #97FA97;
+            margin: 50px auto 0;
+            padding: 50px 20px;
+            border-radius: 15px;
+        }
+        
+        .search {
+            width: 500px;
+            margin: 40px auto 0;
+        }
+        
+        .search_t {
+            width: 100%;
+            height: 40px;
+            display: flex;
+        }
+        
+        .search_t input {
+            width: 85%;
+            height: 35px;
+            box-sizing: border-box;
+            padding: 0 20px;
+            outline: none;
+            border: 1px solid #87CEEB;
+        }
+        
+        .search_t div.ss {
+            width: 15%;
+            height: 35px;
+            color: white;
+            font-size: 16px;
+            line-height: 35px;
+            background-color: #87CEEB;
+            user-select: none;
+            cursor: pointer;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .search_b {
+            width: 200px;
+        }
+        
+        .search_b ul {
+            display: flex;
+            color: #B5B1C7;
+            justify-content: space-between;
+        }
+        
+        .search_b ul li {
+            cursor: pointer;
+        }
+        
+        .weather {
+            margin-top: 50px;
+            width: 100%;
+        }
+        
+        .weather ul {
+            display: flex;
+        }
+        
+        .weather ul li {
+            width: calc(100% / 7);
+            box-sizing: border-box;
+            padding: 0 0 10px;
+        }
+        
+        .weather ul li p {
+            color: #151515;
+            font-size: 12px;
+            line-height: 20px;
+            text-align: center;
+        }
+        
+        .weather ul li .wea,
+        .weather ul li .temp {
+            color: #FFB328;
+        }
+        
+        .weather ul li .ms {
+            color: #C8C2C4;
+        }
+        
+        .weather ul li:not(:last-child) {
+            border-right: 2px solid #F4F4F4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h3>天气预报</h3>
+        <div class="search">
+            <div class="search_t">
+                <input type="text">
+                <div class="ss">搜索</div>
+            </div>
+            <div class="search_b">
+                <ul>
+                    <li>北京</li>
+                    <li>上海</li>
+                    <li>广州</li>
+                    <li>深圳</li>
+                </ul>
+            </div>
+        </div>
+        <div class="weather">
+            <ul>
+            </ul>
+        </div>
+    </div>
+    <script>
+        let ul = document.querySelector(".weather ul");
+        let input = document.querySelector("input");
+        let ipt = document.querySelector(".ss");
+        let s = (url) => {
+            let url2 = "https://tianqiapi.com/api?version=v1&appid=28651199&appsecret=hEouF3o6&city=" + url;
+            return new Promise((resolve, reject) => {
+                // 这里就可以开始写ajax代码了
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("get", url2);
+                xhr.send();
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == 4) { // 判断ajax状态码
+                        if (xhr.status == 200) { // 判断http状态码
+                            // 解决
+                            resolve(JSON.parse(xhr.responseText));
+                            console.log(JSON.parse(xhr.responseText));
+                        } else {
+                            // 拒绝
+                            reject(xhr);
+                        }
+                    }
+                }
+            });
+        }
+        let forWeather = (citys) => {
+            s(citys).then(res => {
+                console.log(res);
+                // 城市
+                let city_name = res.data.city;
+                let data = res.data;
+                ul.innerHTML = "";
+                let str = "";
+                data.forEach(item => {
+                    str += `<li>
+                    <img src="https://www.mingtai18.com/tianqiapi/skin/pitaya/${item.wea_img}.png" alt="">
+                    <p class="wea">${item.wea}</p>
+                    <p class="temp">最低气温 ${item.tem2}~最高温${item.tem1}</p>
+                    <p class="ms">${item.day} ${item.week}</p>
+                    <p class="wind">${item.win}</p>
+                    <p class="level">${item.win_speed}</p>
+                </li>`;
+                })
+                ul.innerHTML = str;
+            }).catch(err => {
+                console.error("错误信息为:" + err);
+            })
+        }
+        forWeather("广州");
+
+        // 点击
+        let lis = document.querySelectorAll(".search_b ul li");
+        for (let i of lis) {
+            i.onclick = (e) => {
+                forWeather(e.target.innerText);
+                input.value = e.target.innerText;
+            }
+        }
+
+        // 搜索
+        ipt.onclick = () => {
+            if (input.value != "") {
+                forWeather(input.value);
+            }
+        }
+    </script>
+</body>
+
+</html>

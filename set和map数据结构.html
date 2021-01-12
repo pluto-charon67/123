@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // set 类似数组，但是成员的值都是唯一的，没有重复的值
+        // let a = new Set(数组)
+        let a = new Set([10, 20, 30, 10, 20.40, 50, 60, 70]); //10 20 30不能重复，重复的直接删除了
+        console.log(a);
+
+        // add添加
+        let b = new Set();
+        b.add(10);
+        b.add("str");
+        b.add(true);
+        b.add(20);
+        b.add(30);
+        console.log(b);
+        // delete(value) 删除某个值，返回一个布尔值，表示是否删除
+        // 一次只能删一个
+        b.delete(10);
+        console.log(b);
+        b.delete("str");
+        console.log(b);
+
+        // has(value),set里面是否有某值
+        console.log(b.has(10)); //false
+        console.log(b.has(30)); //true
+
+        // b.clear()清除所有，没有返回值
+        // keys()返回一个遍历对象，用来遍历所有键名
+        // values()返回一个遍历器对象，用来遍历所有的键值
+        console.log(a);
+        for (let i of a.keys()) {
+            console.log(i);
+            console.log(a.keys());
+        }
+        console.log("======================");
+        for (let i of a.values()) {
+            console.log(i);
+            console.log(a.values());
+        }
+
+        // set可以使用for of 遍历也可以使用forEach遍历
+        // 在foreach里面item和index都是item值,
+        // set没有下标
+        for (let i of a) {
+            console.log(i); //值
+        }
+        //set结果应用，去重
+        let arr = [10, 20, 30, 30, 20, 10];
+        let newArr = new Set(arr);
+        console.log(newArr); //{10, 20, 30}
+        console.log([...newArr]); //[10, 20, 30]
+        let arr2 = [...new Set(arr)];
+        console.log(arr2);
+    </script>
+</body>
+
+</html>

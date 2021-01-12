@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // await一定要写在async函数里面，但是async函数里面可以没有await，不能单独使用await
+        // await 10; 单独使用，报错
+
+
+        // await表达式右侧一般为promise对象，但也可以是其他值
+        // 如果await右侧的表达式是promise
+        async function fn2() {
+            let p = new Promise((resolve, reject) => {
+                // 状态为解决状态
+                resolve("ok,解决");
+                // reject("失败了");
+            });
+            await p; //await有return的作用
+
+            // 如果promise的状态是解决状态，await就会对象promise解决的终值做一个获取
+            let res = await p;
+            // console.log(res); // ok,解决
+
+            // 如果await的promise的状态是拒绝，就会抛出异常，需要通过try...catch进行捕获处理错误信息
+        }
+        // console.log(fn2());
+        async function fn3() {
+
+
+            let p = new Promise((resolve, reject) => {
+                reject("失败了");
+                // resolve("成功了");
+            });
+            // 如果await的promise的状态是拒绝，就会抛出异常，需要通过try...catch进行捕获处理错误信息
+            // 成功就走try里面的代码，失败就走catch里面的代码
+            try { //尝试执行try里面的代码，如果出错误就会走catch里面的代码。错误信息会放在catch的参数中
+                let res = await p;
+                console.log(res);
+                console.log(p);
+            } catch (error) {
+                console.log("错误信息为：" + error);
+                console.log(p);
+            }
+        }
+        fn3();
+
+        // await 右侧也可以返回其他类型的数据，
+        // 一般await右侧返回的都是一个确定状态的promise对象
+    </script>
+</body>
+
+</html>

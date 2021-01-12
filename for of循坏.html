@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // for of 遍历的范围 数组，set，map结构，类数组（arguments，或者dom的节点列表）,唯独不能遍历对象，遍历对象还是使用for in
+        let arr = [10, 20, 30, 40, 50];
+        // 因为自定义对象没有迭代器，没有不能使用for of遍历
+        for (let i of arr) {
+            console.log(i); // 10 20 30 40 50 是每个值
+            // console.log(arr)
+        }
+        // 要想在for of 里面拿到下标需要使用keys()或者entries()
+        // 使用了keys()就只能拿到下标，拿不到值了，使用entries就可以拿到下标和值
+        for (let i of arr.keys()) {
+            console.log(i); //这里的i就是下标
+        }
+        for (let [index, item] of arr.entries()) {
+            console.log(index, item);
+        }
+    </script>
+</body>
+
+</html>
